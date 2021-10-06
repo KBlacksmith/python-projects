@@ -1,11 +1,26 @@
 import random
 import math
+class TicTacToe(): 
+    def __init__(self):
+        self.state = {1: " ", 2: " ", 3: " ", 4: " ", 5: " ", 6: " ", 7: " ", 8: " ", 9: " "}
+        self.available = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+    def printBoardGame(self): 
+        print(self.state[7]+"|"+self.state[8]+"|"+self.state[9])
+        print("-+-+-")
+        print(self.state[4]+"|"+self.state[5]+"|"+self.state[6])
+        print("-+-+-")
+        print(self.state[1]+"|"+self.state[2]+"|"+self.state[3])
+    def clearBoard(self): 
+        self.available = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        for i in range(1, 10):
+            self.state[i] = " "
 class Player(): 
     def __init__(self):
         self.marker = ""
         while(self.marker != "X" and self.marker != "O"): 
             self.marker = input("Choose your marker (X or O): ").upper()
-    def play(self, myBoard): 
+    def play(self, myBoard: TicTacToe): 
         move = 0
         validMove = False
         while(validMove != True): 
@@ -25,28 +40,28 @@ class Player():
         myBoard.available.remove(move)
 
 class Bot(): 
-    def __init__(self, player1): 
+    def __init__(self, player1: str): 
         self.marker = ""
         if(player1 == 'X'): 
             self.marker = 'O'
         else: 
             self.marker = 'X'
-    def play(self, TicTacToe):
+    def play(self, board: TicTacToe):
         random.seed()
         move = random.randint(1, 9)
-        while(TicTacToe.state[move] != " "): 
+        while(board.state[move] != " "): 
             move = random.randint(1, 9)
-        TicTacToe.state[move] = self.marker
-        TicTacToe.available.remove(move)
+        board.state[move] = self.marker
+        board.available.remove(move)
         print("CPU's move: ")
 class Joe(): 
-    def __init__(self, player1):
+    def __init__(self, player1: str):
         self.marker = ""
         if(player1 == 'X'): 
             self.marker = 'O'
         else: 
             self.marker = 'X'
-    def play(self, myBoard): 
+    def play(self, myBoard: TicTacToe): 
         random.seed()
         move = 0
         if(random.randint(1, 2) == 1): 
@@ -58,7 +73,7 @@ class Joe():
         myBoard.state[move] = self.marker
         myBoard.available.remove(move)
         print("BotJoe's Move: ")
-    def minimax(self, state, available, playerMarker): 
+    def minimax(self, state, available: list, playerMarker: str): 
         max_player = self.marker
         otherP = 'O' if playerMarker == 'X' else 'X'
         if(winner(state, otherP) == 1):
@@ -91,13 +106,13 @@ class Joe():
                     best = sim_score
         return best
 class TensaiBot(): 
-    def __init__(self, player1):
+    def __init__(self, player1: str):
         self.marker = ""
         if(player1 == 'X'): 
             self.marker = 'O'
         else: 
             self.marker = 'X'
-    def play(self, myBoard): 
+    def play(self, myBoard: TicTacToe): 
         random.seed()
         move = 0
         if(len(myBoard.available) == 9): 
@@ -107,7 +122,7 @@ class TensaiBot():
         myBoard.state[move] = self.marker
         myBoard.available.remove(move)
         print("Tensai's move")
-    def minimax(self, state, available, playerMarker): 
+    def minimax(self, state: dict, available: list, playerMarker: str): 
         max_player = self.marker
         otherP = 'O' if playerMarker == 'X' else 'X'
         if(winner(state, otherP) == 1):
@@ -139,23 +154,9 @@ class TensaiBot():
                 if(sim_score['Score'] < best['Score']): 
                     best = sim_score
         return best
-class TicTacToe(): 
-    def __init__(self):
-        self.state = {1: " ", 2: " ", 3: " ", 4: " ", 5: " ", 6: " ", 7: " ", 8: " ", 9: " "}
-        self.available = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-    def printBoardGame(self): 
-        print(self.state[7]+"|"+self.state[8]+"|"+self.state[9])
-        print("-+-+-")
-        print(self.state[4]+"|"+self.state[5]+"|"+self.state[6])
-        print("-+-+-")
-        print(self.state[1]+"|"+self.state[2]+"|"+self.state[3])
-    def clearBoard(self): 
-        self.available = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        for i in range(1, 10):
-            self.state[i] = " "
 
-def winner(myBoard, player1): 
+def winner(myBoard: dict, player1: str): 
     playerWinner = False 
     botWinner = False
     for i in range(1, 8, 3): 

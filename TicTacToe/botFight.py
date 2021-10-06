@@ -9,9 +9,9 @@ while(choice == 'y'):
     myBoard.printBoardGame()
     for i in range(1, 10): 
         if(i%2 == 0): 
-            bot1.botMove(myBoard)
+            bot1.play(myBoard)
         else: 
-            bot2.botMove(myBoard)
+            bot2.play(myBoard)
         myBoard.printBoardGame()
         print(myBoard.available)
         print("--------------------")
